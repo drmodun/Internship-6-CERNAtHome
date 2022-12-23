@@ -28,20 +28,29 @@ JOIN Researches r on r.Researchid = sr.ResearchId
 ORDER BY r.releaseTime
 LIMIT(1)
 /*task7*/
-SELECT c.name, COUNT(c) FROM Cities c
+SELECT c.name, COunt(c.name) FROM Cities c
 JOIN Hotels h on h.CityId=c.CityId
-JOIN Scientists sc on sc.HotelId=h.cityId
-Group By c.cityId
-ORDER BY COUNT(c) DESC
+JOIN Scientists sc on sc.HotelId=h.HotelId
+GROUP BY c.name
+ORDER BY COUNT(c.name) DESC
 /*task8*/
-SELECT a.name, Avg(r.numberofquotes) as AvaragaeQuotes FROM Accelerators a
+SELECT a.name, Avg(r.numberofquotes) as AvarageQuotes FROM Accelerators a
 JOIN AcceleratorProjects ap on ap.acceleratorId = a.acceleratorId
 JOIN Projects p on p.projectid = p.projectId
 JOIN Researches r on r.projectId = p.projectid
-GROUP BY a.acceleratorid
+GROUP BY a.name
 
 /*task9*/
 SELECT COUNT(sc.scientistid), sc.field, DATE_PART('decade', (sc.dateofbirth)) as decade, sc.Gender FROM Scientists sc
 GROUP BY sc.field, decade, sc.gender
 HAVING COUNT(sc.scientistId) > 20
 ORDER BY decade DESC;
+/*control queries*/
+SELECT * FROM Cities
+SELECT * FROM Countries
+SelECT * FROM Hotels
+SELECT c.name, sc.name FROM Scientists sc
+JOIN hotels h on h.hotelid=sc.hotelid
+JOIN Cities c on c.CityId = h.CityId
+ORDER BY c.name
+SELECT * FROM scientists
