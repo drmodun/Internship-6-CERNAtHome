@@ -27,4 +27,16 @@ JOIN ScientistsResearch sr on sr.ScientistId = sr.scientistId
 JOIN Researches r on r.Researchid = sr.ResearchId
 ORDER BY r.releaseTime
 LIMIT(1)
-/*task7*/
+
+/*task8*/
+SELECT a.name, Avg(r.numberofquotes) as AvaragaeQuotes FROM Accelerators a
+JOIN AcceleratorProjects ap on ap.acceleratorId = a.acceleratorId
+JOIN Projects p on p.projectid = p.projectId
+JOIN Researches r on r.projectId = p.projectid
+GROUP BY a.acceleratorid
+
+/*task9*/
+SELECT COUNT(sc.scientistid), sc.field, DATE_PART('decade', (sc.dateofbirth)) as decade, sc.Gender FROM Scientists sc
+GROUP BY sc.field, decade, sc.gender
+HAVING COUNT(sc.scientistId) > 20
+ORDER BY decade DESC;
