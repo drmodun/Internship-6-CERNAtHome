@@ -10,13 +10,13 @@ CREATE TABLE PROJECTS(
 CREATE TABLE AcceleratorProjects(
 	AccProjId Serial Primary Key,
 	AcceleratorId INT REFERENCES Accelerators(AcceleratorId) ON DELETE CASCADE,
-	ProjectId INT REFERENCES Projects(ProjectId) ON DELETE CASCADE
+	ProjectId INT REFERENCES Projects(ProjectId) ON DELETE CASCADE	
 );
 CREATE TABLE Countries(
 	CountryId SERIAL PRIMARY KEY,
 	Name VarChar(30) NOT NULL,
-	Population Int NOT NULL,
-	PPP decimal NOT NULL
+	Population Int NOT NULL CHECK (Population>0),
+	PPP decimal NOT NULL CHECK (PPP>0.00)
 );
 CREATE TABLE Cities(
 	Cityid SERIAL PRIMARY KEY,
@@ -28,21 +28,21 @@ CREATE TABLE Hotels(
 	HotelId SERIAL PRIMARY KEY,
 	name VarChar(30) NOT NULL,
 	CityId INT REFERENCES Cities(CityId),
-	Capacity int NOT NULL
+	Capacity int NOT NULL CHECK (Capacity>0)
 );
 
 CREATE TABLE Researches(
 	ResearchId SERIAL PRIMARY KEY,
 	Name VarChar(75) NOt NULL,
 	ProjectId INT REFERENCES Projects(ProjectId) ON DELETE CASCADE,
-	NumberOfQuotes Int NOT NULL,
-	ReleaseTime Timestamp NOT NULL
+	NumberOfQuotes Int NOT NULL CHECK (NumberOfQuotes>0),
+	ReleaseTime Timestamp NOT NULL CHECK (ReleaseTime<NOW())
 );
 CREATE TABLE Scientists(
 	ScientistId SERIAL PRIMARY KEY,
 	Name VarChar(20) NOT NULL,
 	Surname VarChar(20) NOT NULL,
-	DateOfBirth Date NOT NULL,
+	DateOfBirth TimesTamp NOT NULL CHECK (NOW()-DateOfBirth>INTERVAL '18 years'),
 	Gender VarChar NOT NULL,
 	Field VarChar(20) NOT NULL,
 	Country Int REFERENCES Countries(CountryId) ON DELETE CASCADE,
@@ -56,9 +56,7 @@ CREATE TABLE ScientistsResearch(
 	PRIMARY KEY (ScientistId, ResearchId)
 );
 
-/*ALTER TABLE Scientists
-//ADD CONSTRAINT DateCheck CHECK (DateOfBirth-INTERVAL '18 years'>INTERVAL '0 seconds');
-*//*RESET
+/*RESET
 DROP TABLE ACCELERATORS CASCADE;
 DROP TABLE PROJECTS CASCADE;
 DROP TABLE HOTELS CASCADE;
