@@ -2,13 +2,12 @@
 SELECT r.Name, STRING_AGG(CONCAT(sc.surname,' ', SUBSTRING(sc.name,1,1), '.'),', ') as scientists FROM Researches r
 JOIN ScientistsResearch sr ON sr.Researchid= r.researchId
 JOIN Scientists sc ON sc.ScientistId= sr.scientistId
-GROUP BY r.Name
+GROUP BY r.researchid
 
 /*TASK 2*/
 SELECT sc.Name, sc.Surname, Sc.gender, c.name FROM scientists sc
 JOIN Countries c on sc.Country=c.CountryId
 /*task3*/
-
 SELECT p.Name as Project, COALESCE(a.name, 'NEMA GA') as Accelerator FROM projects p
 LEFT JOIN acceleratorProjects ap on ap.projectId=p.projectId
 LEFT JOIN accelerators a on a.acceleratorid=ap.acceleratorId
@@ -16,7 +15,6 @@ LEFT JOIN accelerators a on a.acceleratorid=ap.acceleratorId
 SELECT p.Name FROM projects p
 JOIN Researches r on r.projectid=p.projectId
 WHERE (DATE_PART('year', r.ReleaseTime) BETWEEN 2015 AND 2017)
-
 /*task5*/
 SELECT c.Name as Country, COUNT(r.ResearchId) as Researches, MaX(r.NumberOfQuotes) as Most_popular FROM Countries c
 JOIN Scientists s on s.COuntry = c.CountryId
@@ -50,18 +48,3 @@ SELECT COUNT(sc.scientistid), sc.gender, sc.field, DATE_PART('decade', (sc.dateo
 GROUP BY sc.gender, sc.field, decade
 HAVING COUNT(sc.scientistId) > 20
 ORDER BY sc.gender, sc.field DESC;
-/*control queries*/
-SELECT * FROM Cities
-SELECT * FROM Countries
-SelECT * FROM Hotels
-SELECT sc.name FROM Scientists sc
-WHERE sc.field='Matematika'
-JOIN hotels h on h.hotelid=sc.hotelid
-JOIN Cities c on c.CityId = h.CityId
-ORDER BY c.name
-SELECT * FROM scientists
-SELECT * FROM RESEARCHES
-SELECT * FROM Accelerators
-SELECT * FROM acceleratorPROJECTS
-
-ORDER BY ReleaseTIme
