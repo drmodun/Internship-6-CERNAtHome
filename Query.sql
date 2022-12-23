@@ -27,7 +27,12 @@ JOIN ScientistsResearch sr on sr.ScientistId = sr.scientistId
 JOIN Researches r on r.Researchid = sr.ResearchId
 ORDER BY r.releaseTime
 LIMIT(1)
-
+/*task7*/
+SELECT c.name, COUNT(c) FROM Cities c
+JOIN Hotels h on h.CityId=c.CityId
+JOIN Scientists sc on sc.HotelId=h.cityId
+Group By c.cityId
+ORDER BY COUNT(c) DESC
 /*task8*/
 SELECT a.name, Avg(r.numberofquotes) as AvaragaeQuotes FROM Accelerators a
 JOIN AcceleratorProjects ap on ap.acceleratorId = a.acceleratorId

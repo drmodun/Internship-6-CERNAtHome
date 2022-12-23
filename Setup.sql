@@ -18,9 +18,16 @@ CREATE TABLE Countries(
 	Population Int NOT NULL,
 	PPP decimal NOT NULL
 );
+CREATE TABLE Cities(
+	Cityid SERIAL PRIMARY KEY,
+	Name VarChar(30) Not null,
+	CountryId INT REFERENCES Countries(CountryId)
+);
+
 CREATE TABLE Hotels(
 	HotelId SERIAL PRIMARY KEY,
 	name VarChar(30) NOT NULL,
+	CityId INT REFERENCES Cities(CityId),
 	Capacity int NOT NULL
 );
 
