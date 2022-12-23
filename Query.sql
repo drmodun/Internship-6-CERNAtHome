@@ -27,5 +27,4 @@ JOIN ScientistsResearch sr on sr.ScientistId = sr.scientistId
 JOIN Researches r on r.Researchid = sr.ResearchId
 ORDER BY r.releaseTime
 LIMIT(1)
-
 /*task7*/
